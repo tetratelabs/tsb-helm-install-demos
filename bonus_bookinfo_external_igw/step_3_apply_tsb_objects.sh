@@ -17,7 +17,7 @@ metadata:
 spec:
   namespaceSelector:
     names:
-      - "demo/bookinfo"
+      - "*/bookinfo"
 ---
 apiVersion: gateway.tsb.tetrate.io/v2
 kind: Group
@@ -29,7 +29,7 @@ metadata:
 spec:
   namespaceSelector:
     names:
-      - "demo/bookinfo"
+      - "*/bookinfo"
   configMode: BRIDGED
 ---
 apiVersion: traffic.tsb.tetrate.io/v2
@@ -42,7 +42,7 @@ Metadata:
 spec:
   namespaceSelector:
     names:
-      - "demo/bookinfo"
+      - "*/bookinfo"
   configMode: BRIDGED
 ---
 apiVersion: security.tsb.tetrate.io/v2
@@ -55,7 +55,7 @@ Metadata:
 spec:
   namespaceSelector:
     names:
-      - "demo/bookinfo"
+      - "*/bookinfo"
   configMode: BRIDGED
 ---
 apiVersion: gateway.tsb.tetrate.io/v2
@@ -73,7 +73,7 @@ spec:
       app: tsb-gateway-bookinfo
   http:
     - name: bookinfo
-      port: 8443
+      port: 443
       hostname: "bookinfo.tetrate.com"
       tls:
         mode: SIMPLE
