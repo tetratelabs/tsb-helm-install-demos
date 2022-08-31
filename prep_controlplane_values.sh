@@ -28,7 +28,7 @@ export XCP_CENTRAL_KEY=$(cat xcp-central-cert.key)
 cat >"${FOLDER}/controlplane_values.yaml" <<EOF
 image:
   registry: $REGISTRY
-  tag: 1.5.0
+  tag: 1.5.1
 secrets:
   clusterServiceAccount:
     JWK: '`cat $CLUSTER_NAME-service-account.jwk`'
@@ -63,5 +63,5 @@ yq -i '.secrets.elasticsearch.cacert = strenv(CA_CRT) |
 cat >"${FOLDER}/dataplane_values.yaml" <<EOF
 image:
   registry: $REGISTRY
-  tag: 1.5.0
+  tag: 1.5.1
 EOF
