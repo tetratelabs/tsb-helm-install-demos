@@ -7,7 +7,7 @@ export XCP_CENTRAL_KEY=$(cat xcp-central-cert.key)
 cat >"${FOLDER}/managementplane_values.yaml" <<EOF
 image:
   registry: $REGISTRY
-  tag: 1.5.0
+  tag: 1.5.1
 secrets:
   ldap:
     binddn: cn=admin,dc=tetrate,dc=io
