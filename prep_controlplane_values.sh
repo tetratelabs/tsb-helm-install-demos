@@ -1,3 +1,4 @@
+#!/bin/sh
 
 cat > "${FOLDER}/cluster-$CLUSTER_NAME.yaml" <<EOF
 ---
@@ -8,7 +9,7 @@ metadata:
   organization: $ORG
 spec:
   tokenTtl: "87600h"
-  tier1Cluster: false
+  tier1Cluster: ${TIER1:-false}
 EOF
 
 tctl apply -f "${FOLDER}/cluster-$CLUSTER_NAME.yaml"
