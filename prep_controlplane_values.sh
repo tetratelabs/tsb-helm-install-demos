@@ -1,6 +1,7 @@
 #!/bin/sh
 
 FOLDER=${FOLDER:-.}
+ORG=${ORG:-tetrate}
 
 cat > "${FOLDER}/cluster-$CLUSTER_NAME.yaml" <<EOF
 ---

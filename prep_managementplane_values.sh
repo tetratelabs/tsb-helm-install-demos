@@ -5,6 +5,7 @@ export XCP_CENTRAL_CERT=$(cat xcp-central-cert.crt)
 export XCP_CENTRAL_KEY=$(cat xcp-central-cert.key)
 
 FOLDER=${FOLDER:-.}
+ORG=${ORG:-tetrate}
 
 cat >"${FOLDER}/managementplane_values.yaml" <<EOF
 image:
