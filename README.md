@@ -7,6 +7,8 @@ Please refer for more details over here: https://docs.tetrate.io/service-bridge/
 ### Prep the certificates using OpenSSL on Linux
 
 ```sh
+export FOLDER="."
+export ORG="tetrate"
 export TSB_FQDN="r150helm.cx.tetrate.info"
 ./certs-gen/certs-gen.sh
 ```
@@ -36,7 +38,6 @@ helm install mp tetrate-tsb-helm/managementplane -n tsb --create-namespace -f ma
 ## Connect to MP
 
 ```sh
-export TSB_FQDN="r150helm.cx.tetrate.info"
 tctl config clusters set helm --tls-insecure --bridge-address $TSB_FQDN:8443
 tctl config users set helm --username admin --password "Tetrate123" --org "tetrate"
 tctl config profiles set helm --cluster helm --username helm
@@ -58,7 +59,8 @@ Please refer for more details over here: https://docs.tetrate.io/service-bridge/
 ### Prep the `controlplane_values.yaml` and `dataplane_values.yaml`
 
 ```sh
-export TSB_FQDN="r150helm.cx.tetrate.info"
+export FOLDER="."
+export ORG="tetrate"
 export REGISTRY="r150helm1tsbacrqasvohujrqvnjp0u.azurecr.io"
 export CLUSTER_NAME="app-cluster1"
 ./prep_controlplane_values.sh
