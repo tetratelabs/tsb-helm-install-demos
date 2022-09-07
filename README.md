@@ -7,7 +7,6 @@ Please refer for more details over here: https://docs.tetrate.io/service-bridge/
 ### Prep the certificates using OpenSSL on Linux
 
 ```sh
-export FOLDER="."
 export TSB_FQDN="r150helm.cx.tetrate.info"
 ./certs-gen/certs-gen.sh
 ```
@@ -21,7 +20,6 @@ The output will consist of:
 ### Prep the `managementplane_values.yaml`
 
 ```sh
-export FOLDER="."
 export REGISTRY="r150helm1tsbacrqasvohujrqvnjp0u.azurecr.io"
 export ORG="tetrate"
 ./prep_managementplane_values.sh
@@ -61,7 +59,6 @@ Please refer for more details over here: https://docs.tetrate.io/service-bridge/
 ### Prep the `controlplane_values.yaml` and `dataplane_values.yaml`
 
 ```sh
-export FOLDER="."
 export TSB_FQDN="r150helm.cx.tetrate.info"
 export REGISTRY="r150helm1tsbacrqasvohujrqvnjp0u.azurecr.io"
 export ORG="tetrate"

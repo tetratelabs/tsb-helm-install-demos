@@ -1,5 +1,7 @@
 #!/bin/sh
 
+FOLDER=${FOLDER:-.}
+
 cat > "${FOLDER}/cluster-$CLUSTER_NAME.yaml" <<EOF
 ---
 apiVersion: api.tsb.tetrate.io/v2
