@@ -1,5 +1,3 @@
-FOLDER=${FOLDER:-.}
-
 function create_cert() {
   local readonly name=$1
   local readonly folder=$2
