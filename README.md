@@ -8,7 +8,6 @@ Please refer for more details over here: https://docs.tetrate.io/service-bridge/
 
 ```sh
 export FOLDER="."
-export ORG="tetrate"
 export TSB_FQDN="r150helm.cx.tetrate.info"
 ./certs-gen/certs-gen.sh
 ```
@@ -22,7 +21,9 @@ The output will consist of:
 ### Prep the `managementplane_values.yaml`
 
 ```sh
+export FOLDER="."
 export REGISTRY="r150helm1tsbacrqasvohujrqvnjp0u.azurecr.io"
+export ORG="tetrate"
 ./prep_managementplane_values.sh
 cat managementplane_values.yaml
 ```
@@ -38,6 +39,7 @@ helm install mp tetrate-tsb-helm/managementplane -n tsb --create-namespace -f ma
 ## Connect to MP
 
 ```sh
+export TSB_FQDN="r150helm.cx.tetrate.info"
 tctl config clusters set helm --tls-insecure --bridge-address $TSB_FQDN:8443
 tctl config users set helm --username admin --password "Tetrate123" --org "tetrate"
 tctl config profiles set helm --cluster helm --username helm
@@ -60,8 +62,9 @@ Please refer for more details over here: https://docs.tetrate.io/service-bridge/
 
 ```sh
 export FOLDER="."
-export ORG="tetrate"
+export TSB_FQDN="r150helm.cx.tetrate.info"
 export REGISTRY="r150helm1tsbacrqasvohujrqvnjp0u.azurecr.io"
+export ORG="tetrate"
 export CLUSTER_NAME="app-cluster1"
 ./prep_controlplane_values.sh
 cat "${CLUSTER_NAME}-controlplane_values.yaml"
