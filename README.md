@@ -36,11 +36,7 @@ helm repo update
 helm install mp tetrate-tsb-helm/managementplane -n tsb --create-namespace -f managementplane_values.yaml
 ```
 
-## Deploying CP...
-
-Please refer for more details over here: https://docs.tetrate.io/service-bridge/1.5.x/en-us/setup/requirements-and-download, https://docs.tetrate.io/service-bridge/1.5.x/en-us/setup/helm/controlplane
-
-### Connect to MP
+## Connect to MP
 
 ```sh
 export TSB_FQDN="r150helm.cx.tetrate.info"
@@ -58,6 +54,10 @@ NAME       DISPLAY NAME    DESCRIPTION
 tetrate    tetrate
 ```
 
+## Deploying CP...
+
+Please refer for more details over here: https://docs.tetrate.io/service-bridge/1.5.x/en-us/setup/requirements-and-download, https://docs.tetrate.io/service-bridge/1.5.x/en-us/setup/helm/controlplane
+
 ### Prep the `controlplane_values.yaml` and `dataplane_values.yaml`
 
 ```sh
@@ -67,7 +67,7 @@ export REGISTRY="r150helm1tsbacrqasvohujrqvnjp0u.azurecr.io"
 export ORG="tetrate"
 export CLUSTER_NAME="app-cluster1"
 ./prep_controlplane_values.sh
-cat controlplane_values.yaml
+cat "${CLUSTER_NAME}-controlplane_values.yaml"
 ```
 
 ### Install CP using Helm
@@ -75,6 +75,6 @@ cat controlplane_values.yaml
 ```sh
 helm repo add tetrate-tsb-helm 'https://charts.dl.tetrate.io/public/helm/charts/'
 helm repo update
-helm install cp tetrate-tsb-helm/controlplane -n istio-system --create-namespace -f controlplane_values.yaml
+helm install cp tetrate-tsb-helm/controlplane -n istio-system --create-namespace -f "${CLUSTER_NAME}-controlplane_values.yaml"
 helm install dp tetrate-tsb-helm/dataplane -n istio-gateway --create-namespace -f dataplane_values.yaml
 ```

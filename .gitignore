@@ -1,0 +1,18 @@
+# generated *-plane values files
+managementplane_values.yaml
+*-controlplane_values.yaml
+dataplane_values.yaml
+
+# generated jwk files
+*-service-account.jwk
+
+# generated cluster yamls
+cluster-*.yaml
+
+# keys
+*.cnf
+*.crt
+*.csr
+*.key
+
+
