@@ -45,7 +45,7 @@ x509_extensions    = req_ext
 [ req_distinguished_name ]
 countryName         = US
 stateOrProvinceName = CA
-organizationName    = Example
+organizationName    = $ORG
 commonName          = SelfSignedRootCA
 [ req_ext ]
 subjectKeyIdentifier = hash
@@ -86,7 +86,7 @@ x509_extensions    = req_ext
 [ req_distinguished_name ]
 countryName         = US
 stateOrProvinceName = CA
-organizationName    = Example
+organizationName    = $ORG
 commonName          = Example TSB Envoy GUI
 [ req_ext ]
 subjectKeyIdentifier = hash
@@ -119,7 +119,7 @@ x509_extensions    = req_ext
 [ req_distinguished_name ]
 countryName         = US
 stateOrProvinceName = CA
-organizationName    = Example
+organizationName    = $ORG
 commonName          = XCP Central
 # you will have to use 'extendedKeyUsage = serverAuth, clientAuth' because it will be checked by the TSB.
 [ req_ext ]

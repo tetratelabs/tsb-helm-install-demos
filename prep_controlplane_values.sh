@@ -1,4 +1,8 @@
-cat > "${FOLDER}/cluster-$CLUSTER_NAME.yaml" <<EOF
+#!/bin/bash
+
+# awk cmd taken from https://www.starkandwayne.com/blog/bashing-your-yaml/
+
+cat << EOF > "$FOLDER/cluster-$CLUSTER_NAME.yaml"
 ---
 apiVersion: api.tsb.tetrate.io/v2
 kind: Cluster
@@ -10,30 +14,27 @@ spec:
   tier1Cluster: ${TIER1:-false}
 EOF
 
-tctl apply -f "${FOLDER}/cluster-$CLUSTER_NAME.yaml"
+tctl apply -f "$FOLDER/cluster-$CLUSTER_NAME.yaml"
 
 tctl install cluster-service-account --cluster $CLUSTER_NAME > $CLUSTER_NAME-service-account.jwk
 
-export CA_CRT=$(cat ca.crt)
-export TSB_CRT=$(cat tsb_certs.crt)
-export TSB_KEY=$(cat tsb_certs.key)
-export XCP_CENTRAL_CERT=$(cat xcp-central-cert.crt)
-export XCP_CENTRAL_KEY=$(cat xcp-central-cert.key)
-
-cat >"${FOLDER}/${CLUSTER_NAME}-controlplane_values.yaml" <<EOF
+cat << EOF > "$FOLDER/$CLUSTER_NAME-controlplane_values.yaml"
 image:
   registry: $REGISTRY
-  tag: 1.5.1
+  tag: 1.5.2
 secrets:
   clusterServiceAccount:
-    JWK: '`cat $CLUSTER_NAME-service-account.jwk`'
+    JWK: '$(cat $CLUSTER_NAME-service-account.jwk)'
     clusterFQN: organizations/$ORG/clusters/$CLUSTER_NAME
   elasticsearch:
     cacert: |
+$(awk '{printf "      %s\n", $0}' < ca.crt)
   tsb:
     cacert: |  
+$(awk '{printf "      %s\n", $0}' < ca.crt)
   xcp: 
     rootca: |
+$(awk '{printf "      %s\n", $0}' < ca.crt)
 spec:
   hub: $REGISTRY
   managementPlane:
@@ -51,12 +52,8 @@ spec:
       version: 7
 EOF
 
-yq -i '.secrets.elasticsearch.cacert = strenv(CA_CRT) |
-       .secrets.tsb.cacert = strenv(CA_CRT) |
-       .secrets.xcp.rootca = strenv(CA_CRT)' "${CLUSTER_NAME}-controlplane_values.yaml"
-
-cat >"${FOLDER}/dataplane_values.yaml" <<EOF
+cat << EOF > "$FOLDER/dataplane_values.yaml"
 image:
   registry: $REGISTRY
-  tag: 1.5.1
+  tag: 1.5.2
 EOF

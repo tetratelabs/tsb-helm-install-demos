@@ -1,13 +1,10 @@
-export CA_CRT=$(cat ca.crt)
-export TSB_CRT=$(cat tsb_certs.crt)
-export TSB_KEY=$(cat tsb_certs.key)
-export XCP_CENTRAL_CERT=$(cat xcp-central-cert.crt)
-export XCP_CENTRAL_KEY=$(cat xcp-central-cert.key)
 
-cat >"${FOLDER}/managementplane_values.yaml" <<EOF
+# awk cmd taken from https://www.starkandwayne.com/blog/bashing-your-yaml/
+
+cat >"$FOLDER/managementplane_values.yaml" <<EOF
 image:
   registry: $REGISTRY
-  tag: 1.5.1
+  tag: 1.5.2
 secrets:
   ldap:
     binddn: cn=admin,dc=tetrate,dc=io
@@ -18,20 +15,19 @@ secrets:
   tsb:
     adminPassword: Tetrate123
     cert: |   
+$(awk '{printf "      %s\n", $0}' < tsb_certs.crt)
     key: |  
+$(awk '{printf "      %s\n", $0}' < tsb_certs.key)
   xcp:
     autoGenerateCerts: false
     central:
       cert: |   
+$(awk '{printf "        %s\n", $0}' < xcp-central-cert.crt)
       key: |  
+$(awk '{printf "        %s\n", $0}' < xcp-central-cert.key)
     rootca: |
+$(awk '{printf "      %s\n", $0}' < ca.crt)
 spec:
   hub: $REGISTRY
   organization: $ORG
 EOF
-
-yq -i '.secrets.xcp.rootca = strenv(CA_CRT) |
-       .secrets.xcp.central.cert = strenv(XCP_CENTRAL_CERT) |
-       .secrets.xcp.central.key = strenv(XCP_CENTRAL_KEY) |
-       .secrets.tsb.cert = strenv(TSB_CRT) |
-       .secrets.tsb.key = strenv(TSB_KEY)'  managementplane_values.yaml
