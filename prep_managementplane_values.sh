@@ -4,7 +4,7 @@
 cat >"$FOLDER/managementplane_values.yaml" <<EOF
 image:
   registry: $REGISTRY
-  tag: 1.5.2
+  tag: 1.5.3
 secrets:
   ldap:
     binddn: cn=admin,dc=tetrate,dc=io
