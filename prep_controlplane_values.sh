@@ -21,7 +21,7 @@ tctl install cluster-service-account --cluster $CLUSTER_NAME > $CLUSTER_NAME-ser
 cat << EOF > "$FOLDER/$CLUSTER_NAME-controlplane_values.yaml"
 image:
   registry: $REGISTRY
-  tag: 1.5.2
+  tag: 1.5.3
 secrets:
   clusterServiceAccount:
     JWK: '$(cat $CLUSTER_NAME-service-account.jwk)'
@@ -55,5 +55,5 @@ EOF
 cat << EOF > "$FOLDER/dataplane_values.yaml"
 image:
   registry: $REGISTRY
-  tag: 1.5.2
+  tag: 1.5.3
 EOF
