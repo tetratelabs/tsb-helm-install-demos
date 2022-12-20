@@ -1,10 +1,11 @@
+#!/bin/bash
 
 # awk cmd taken from https://www.starkandwayne.com/blog/bashing-your-yaml/
 
 cat >"$FOLDER/managementplane_values.yaml" <<EOF
 image:
   registry: $REGISTRY
-  tag: 1.5.3
+  tag: $VERSION
 secrets:
   ldap:
     binddn: cn=admin,dc=tetrate,dc=io

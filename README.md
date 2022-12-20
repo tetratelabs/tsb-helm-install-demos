@@ -10,6 +10,7 @@ Please refer for more details over here: https://docs.tetrate.io/service-bridge/
 export FOLDER="."
 export TSB_FQDN="r150helm.cx.tetrate.info"
 export ORG="tetrate"
+export VERSION="1.6.0-internal-rc8"
 ./certs-gen/certs-gen.sh
 ```
 
@@ -25,6 +26,7 @@ The output will consist of:
 export FOLDER="."
 export REGISTRY="r150helm1tsbacrqasvohujrqvnjp0u.azurecr.io"
 export ORG="tetrate"
+export VERSION="1.6.0-internal-rc8"
 ./prep_managementplane_values.sh
 cat managementplane_values.yaml
 ```
@@ -49,13 +51,13 @@ tctl config profiles set-current helm
 
 ### Validate the connection
 
-```
+```sh
 ❯ tctl get org
 NAME       DISPLAY NAME    DESCRIPTION
 tetrate    tetrate
 ```
 
-## Deploying CP...
+## Deploying CP
 
 Please refer for more details over here: https://docs.tetrate.io/service-bridge/1.5.x/en-us/setup/requirements-and-download, https://docs.tetrate.io/service-bridge/1.5.x/en-us/setup/helm/controlplane
 
@@ -67,6 +69,7 @@ export TSB_FQDN="r150helm.cx.tetrate.info"
 export REGISTRY="r150helm1tsbacrqasvohujrqvnjp0u.azurecr.io"
 export ORG="tetrate"
 export CLUSTER_NAME="app-cluster1"
+export VERSION="1.6.0-internal-rc8"
 ./prep_controlplane_values.sh
 cat "${CLUSTER_NAME}-controlplane_values.yaml"
 ```
