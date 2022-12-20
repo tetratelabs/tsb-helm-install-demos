@@ -36,7 +36,9 @@ cat managementplane_values.yaml
 ```sh
 helm repo add tetrate-tsb-helm 'https://charts.dl.tetrate.io/public/helm/charts/'
 helm repo update
-helm install mp tetrate-tsb-helm/managementplane -n tsb --create-namespace -f managementplane_values.yaml
+helm install mp tetrate-tsb-helm/managementplane -n tsb \
+  --create-namespace -f managementplane_values.yaml \
+  --version $VERSION --devel  
 ```
 
 ## Connect to MP
@@ -79,6 +81,10 @@ cat "${CLUSTER_NAME}-controlplane_values.yaml"
 ```sh
 helm repo add tetrate-tsb-helm 'https://charts.dl.tetrate.io/public/helm/charts/'
 helm repo update
-helm install cp tetrate-tsb-helm/controlplane -n istio-system --create-namespace -f "${CLUSTER_NAME}-controlplane_values.yaml"
-helm install dp tetrate-tsb-helm/dataplane -n istio-gateway --create-namespace -f dataplane_values.yaml
+helm install cp tetrate-tsb-helm/controlplane -n istio-system \
+  --create-namespace -f "${CLUSTER_NAME}-controlplane_values.yaml" \
+  --version $VERSION --devel
+helm install dp tetrate-tsb-helm/dataplane -n istio-gateway \
+  --create-namespace -f dataplane_values.yaml \
+  --version $VERSION --devel  
 ```
