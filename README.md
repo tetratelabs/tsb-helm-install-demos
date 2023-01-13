@@ -46,7 +46,7 @@ helm install mp tetrate-tsb-helm/managementplane -n tsb \
 ```sh
 export TSB_FQDN="r150helm.cx.tetrate.info"
 tctl config clusters set helm --tls-insecure --bridge-address $TSB_FQDN:8443
-tctl config users set helm --username admin --password "Tetrate123" --org "tetrate"
+tctl config users set helm --username admin --password "Tetrate123" --org $ORG
 tctl config profiles set helm --cluster helm --username helm
 tctl config profiles set-current helm
 ```
