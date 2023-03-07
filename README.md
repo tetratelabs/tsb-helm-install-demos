@@ -50,6 +50,10 @@ helm install mp tetrate-tsb-helm/managementplane -n tsb \
 
 ### Lookup and register FQDN to proceed with the Application Cluster Onboarding
 
+```sh
+kubectl -n tsb  get service envoy -o=jsonpath="{.status.loadBalancer.ingress[0]['hostname','ip']}"
+```
+
 ### Connect using `tctl`
 
 ```sh
@@ -71,6 +75,9 @@ tctl config profiles set-current helm
 ###  Perform the basic query using `tctl` to validate the connection against TSB Management Plane
 
 ```sh
+❯ tctl version
+TCTL version: v1.6.0-heads/tags/1.6.0
+TSB version: v1.6.0
 ❯ tctl get org
 NAME       DISPLAY NAME    DESCRIPTION
 tetrate    tetrate
