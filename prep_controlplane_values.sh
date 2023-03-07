@@ -40,16 +40,52 @@ spec:
   managementPlane:
     clusterName: $CLUSTER_NAME
     host: $TSB_FQDN
-    port: 8443
+    port: 443
     selfSigned: true
   meshExpansion: {}
   telemetryStore:
     elastic:
       host: $TSB_FQDN
-      port: 8443
+      port: 443
       protocol: https
       selfSigned: true
       version: 7
+  components:
+    xcp:
+      centralAuthMode: JWT
+      configProtection: {}
+      kubeSpec:
+        deployment:
+          env:
+            - name: ENABLE_GATEWAY_DELETE_HOLD
+              value: "true"
+            - name: GATEWAY_DELETE_HOLD_SECONDS
+              value: "20"
+        overlays:
+          - apiVersion: install.xcp.tetrate.io/v1alpha1
+            kind: EdgeXcp
+            name: edge-xcp
+            patches:
+              - path: spec.components.edgeServer.kubeSpec.deployment.env[-1]
+                value:
+                  name: ENABLE_ENHANCED_EAST_WEST_ROUTING
+                  value: "true"
+              - path: spec.components.edgeServer.kubeSpec.deployment.env[-1]
+                value:
+                  name: DISABLE_TIER1_TIER2_SEPARATION
+                  value: "true"
+              - path: spec.components.edgeServer.kubeSpec.deployment.env[-1]
+                value:
+                  name: ENABLE_DNS_RESOLUTION_AT_EDGE
+                  value: "true"
+    gitops:
+      enabled: true
+      reconcileInterval: 60s
+    oap:
+      streamingLogEnabled: true
+    meshObservability:
+      settings:
+        apiEndpointMetricsEnabled: true  
 EOF
 
 cat << EOF > "$FOLDER/dataplane_values.yaml"

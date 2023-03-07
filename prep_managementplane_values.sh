@@ -14,7 +14,7 @@ secrets:
     password: tsb-postgres-password
     username: tsb
   tsb:
-    adminPassword: Tetrate123
+    adminPassword: $ADMIN_PASSWORD
     cert: |   
 $(awk '{printf "      %s\n", $0}' < tsb_certs.crt)
     key: |  
@@ -31,4 +31,7 @@ $(awk '{printf "      %s\n", $0}' < ca.crt)
 spec:
   hub: $REGISTRY
   organization: $ORG
+  components:
+    frontEnvoy:
+      port: 443
 EOF
