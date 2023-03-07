@@ -17,6 +17,7 @@ EOF
 tctl apply -f "$FOLDER/cluster-$CLUSTER_NAME.yaml"
 
 tctl install cluster-service-account --cluster $CLUSTER_NAME > $CLUSTER_NAME-service-account.jwk
+tctl x gitops grant $CLUSTER_NAME
 
 cat << EOF > "$FOLDER/$CLUSTER_NAME-controlplane_values.yaml"
 image:
