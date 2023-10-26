@@ -129,10 +129,7 @@ extendedKeyUsage = serverAuth, clientAuth
 subjectAltName   = @alt_names
 # you will have to use the following DNS name and URI because it will be checked by the TSB
 [ alt_names ]
-DNS.1 = xcp.tetrate.io
-URI.1 = spiffe://xcp.tetrate.io/central
 DNS.2 = ${TSB_FQDN}
-DNS.3 = ${TSB_FQDN}:9443
 EOF
 
 create_cert xcp-central-cert \
@@ -141,33 +138,33 @@ create_cert xcp-central-cert \
   "${FOLDER}/ca.crt" \
   "${FOLDER}/ca.key"  
   
-cat >"${FOLDER}/istiod_intermediate_ca.cnf" <<EOF
-# all the fields in this CNF are just example, Client should follow its own PKI practice to configue it properly. only key useage keycertsign is needed for istio to sign the workload certs
-[ req ]
-encrypt_key        = no
-utf8               = yes
-default_bits       = 4096
-default_md         = sha256
-prompt             = no
-distinguished_name = req_distinguished_name
-req_extensions     = req_ext
-x509_extensions    = req_ext
-[ req_distinguished_name ]
-countryName         = US
-stateOrProvinceName = CA
-organizationName    = Example
-commonName          = ISTIO Intermediate CA
-[ req_ext ]
-subjectKeyIdentifier = hash
-basicConstraints     = critical, CA:true, pathlen:0
-keyUsage             = critical, digitalSignature, nonRepudiation, keyEncipherment, keyCertSign
-subjectAltName       = @alt_names
-[ alt_names ]
-DNS.1 = istiod.istio-system.svc
-EOF
+# cat >"${FOLDER}/istiod_intermediate_ca.cnf" <<EOF
+# # all the fields in this CNF are just example, Client should follow its own PKI practice to configue it properly. only key useage keycertsign is needed for istio to sign the workload certs
+# [ req ]
+# encrypt_key        = no
+# utf8               = yes
+# default_bits       = 4096
+# default_md         = sha256
+# prompt             = no
+# distinguished_name = req_distinguished_name
+# req_extensions     = req_ext
+# x509_extensions    = req_ext
+# [ req_distinguished_name ]
+# countryName         = US
+# stateOrProvinceName = CA
+# organizationName    = Example
+# commonName          = ISTIO Intermediate CA
+# [ req_ext ]
+# subjectKeyIdentifier = hash
+# basicConstraints     = critical, CA:true, pathlen:0
+# keyUsage             = critical, digitalSignature, nonRepudiation, keyEncipherment, keyCertSign
+# subjectAltName       = @alt_names
+# [ alt_names ]
+# DNS.1 = istiod.istio-system.svc
+# EOF
 
-create_cert istiod_intermediate_ca \
-  "${FOLDER}" \
-  "${FOLDER}/istiod_intermediate_ca.cnf" \
-  "${FOLDER}/ca.crt" \
-  "${FOLDER}/ca.key"
+# create_cert istiod_intermediate_ca \
+#   "${FOLDER}" \
+#   "${FOLDER}/istiod_intermediate_ca.cnf" \
+#   "${FOLDER}/ca.crt" \
+#   "${FOLDER}/ca.key"
