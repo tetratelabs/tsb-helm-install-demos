@@ -54,7 +54,15 @@ spec:
   components:
     xcp:
       centralAuthMode: JWT
+      centralProvidedCaCert: true 
       configProtection: {}
+      isolationBoundaries:
+      - name: global
+        revisions:
+        - name: default
+      - name: prod
+        revisions:
+        - name: prod-stable
       kubeSpec:
         deployment:
           env:
@@ -79,6 +87,14 @@ spec:
                 value:
                   name: ENABLE_DNS_RESOLUTION_AT_EDGE
                   value: "true"
+              - path: spec.components.edgeServer.kubeSpec.deployment.env[-1]
+                value:
+                  name: ENABLE_NETWORK_POLICY_TRANSLATION
+                  value: "false"
+              - path: spec.components.edgeServer.kubeSpec.deployment.env[-1]
+                value:
+                  name: ENABLE_NON_INGRESS_HOST_LEVEL_AUTHORIZATION
+                  value: "false"
     gitops:
       enabled: true
       reconcileInterval: 60s
@@ -87,10 +103,9 @@ spec:
     meshObservability:
       settings:
         apiEndpointMetricsEnabled: true  
-EOF
-
-cat << EOF > "$FOLDER/dataplane_values.yaml"
-image:
-  registry: $REGISTRY
-  tag: $VERSION
+operator:
+  deployment:
+    env:
+    - name: ISTIO_ISOLATION_BOUNDARIES
+      value: "true"
 EOF
