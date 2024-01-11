@@ -1,26 +1,26 @@
 # TSB Demo Helm Installation
 
-## Tetrate Service Bridge (TSB) 1.7.X
-Review the TSB components in the docs [here](https://docs.tetrate.io/service-bridge/1.6.x/en-us/setup/components). This page will explain in details TSB components and external dependencies that you have to provision and connect to be able to run TSB.
+## Tetrate Service Bridge (TSB) 1.8.X
+Review the TSB components in the docs [here](https://docs.tetrate.io/service-bridge/setup/components). This page will explain in details TSB components and external dependencies that you have to provision and connect to be able to run TSB.
 
 ## Firewall Rules Requirements
-Review [Firewall Information](https://docs.tetrate.io/service-bridge/1.6.x/en-us/setup/firewall_information) page for the required ports to be opened.
+Review [Firewall Information](https://docs.tetrate.io/service-bridge/setup/firewall_information) page for the required ports to be opened.
 
 > NOTE: TSB Load Balancer (also known as front-envoy) has default port 8443. This port value is user configurable. For example, we have changed the port to 443 as part of the installation process below. If the default port is changed, then all components that communicate via front-envoy need to be adjusted accordingly to match the user-defined value of the front-envoy port.
 
 ## Deploying TSB Management Plane
 
-Please refer to [Requirements and Download Page](https://docs.tetrate.io/service-bridge/latest/en-us/setup/requirements-and-download) and [Deploying TSB Management Plane using Helm](https://docs.tetrate.io/service-bridge/latest/en-us/setup/helm/managementplane)
+Please refer to [Requirements and Download Page](https://docs.tetrate.io/service-bridge/setup/requirements-and-download) and [Deploying TSB Management Plane using Helm](https://docs.tetrate.io/service-bridge/latest/en-us/setup/helm/managementplane)
 
 ### Prepare the required certificates using OpenSSL on Linux (Mac OS X OpenSSL is not supported)
 
-Please refer to [Certificates Setup](https://docs.tetrate.io/service-bridge/1.6.x/en-us/setup/certificate/certificate-setup) page for more details
+Please refer to [Certificates Setup](https://docs.tetrate.io/service-bridge/setup/certificate/certificate-setup) page for more details
 
 ```sh
 export FOLDER="."
-export TSB_FQDN="r17xhelm.sandbox.tetrate.io"
+export TSB_FQDN="r18xhelm.sandbox.tetrate.io"
 export ORG="tetrate"
-export VERSION="1.7.2"
+export VERSION="1.8.0"
 ./certs-gen/certs-gen.sh
 ```
 
@@ -34,9 +34,9 @@ The output will consist of:
 
 ```sh
 export FOLDER="."
-export REGISTRY="gcr.io/r17xhelm-hqdp-1"
+export REGISTRY="gcr.io/r18xhelm-hqdp-1"
 export ORG="tetrate"
-export VERSION="1.7.2"
+export VERSION="1.8.0"
 export ADMIN_PASSWORD="Tetrate123"
 ./prep_managementplane_values.sh
 cat managementplane_values.yaml
@@ -57,7 +57,7 @@ helm install mp tetrate-tsb-helm/managementplane -n tsb \
 ```sh
 ❯ helm ls -A
 NAME    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
-mp      tsb             1               2023-10-25 21:18:10.768315 -0400 EDT    deployed        managementplane-1.7.2   1.7.2    
+mp      tsb             1               2024-01-11 21:18:10.768315 -0400 EDT    deployed        managementplane-1.8.0   1.8.0    
 
 > kubectl get pod -n tsb
 NAME                                           READY   STATUS      RESTARTS   AGE
@@ -83,18 +83,21 @@ xcp-operator-central-76b8cb66ff-mgft8          1/1     Running     0          79
 
 > https://docs.tetrate.io/service-bridge/reference/cli/guide/index
 
-After downloading the version for your OS, please run the command 'tctl version' to verify you have 1.7.2.
+After downloading the version for your OS, please run the command 'tctl version' to verify you have 1.8.0.
 
 ```sh
-export TSB_FQDN="r17xhelm.sandbox.tetrate.io"
+export TSB_FQDN="r18xhelm.sandbox.tetrate.io"
 export ADMIN_PASSWORD="Tetrate123"
 
 
 # Consult docs on how to install https://docs.tetrate.io/service-bridge/reference/cli/guide/index#installation
-# export VERSION="1.7.2"
+# export VERSION="1.8.0"
 # export DISTRO="linux-amd64"
 # curl -Lo "/usr/local/bin/tctl" "https://binaries.dl.tetrate.io/public/raw/versions/$DISTRO-$VERSION/tctl"
+```
+Make sure you have updated your DNS with a record for TSB FQDN (`A` record or `CNAME` record of envoy service obtained previously)
 
+```sh
 tctl config clusters set helm --tls-insecure --bridge-address $TSB_FQDN:443
 tctl config users set helm --username admin --password $ADMIN_PASSWORD --org $ORG
 tctl config profiles set helm --cluster helm --username helm
@@ -105,8 +108,8 @@ tctl config profiles set-current helm
 
 ```sh
 ❯ tctl version
-TCTL version: v1.7.2
-TSB version: v1.7.2
+TCTL version: v1.8.0
+TSB version: v1.8.0
 ❯ tctl get org
 NAME       DISPLAY NAME    DESCRIPTION
 tetrate    tetrate
@@ -120,11 +123,11 @@ Please refer to [Requirements and Download Page](https://docs.tetrate.io/service
 
 ```sh
 export FOLDER="."
-export TSB_FQDN="r17xhelm.sandbox.tetrate.io"
-export REGISTRY="gcr.io/swlab17-cwli-1"
+export TSB_FQDN="r18xhelm.sandbox.tetrate.io"
+export REGISTRY="gcr.io/swlab18-cwli-1"
 export ORG="tetrate"
 export CLUSTER_NAME="app-cluster1"
-export VERSION="1.7.2"
+export VERSION="1.8.0"
 ./prep_controlplane_values.sh
 cat "${CLUSTER_NAME}-controlplane_values.yaml"
 ```
@@ -144,7 +147,7 @@ helm install cp tetrate-tsb-helm/controlplane -n istio-system \
 ```sh
 ❯ helm ls -A
 NAME	NAMESPACE   	REVISION	UPDATED                               	STATUS  	CHART                	APP VERSION
-cp  	istio-system	1       	2023-10-25 21:28:13.216254 -0400 -0400	deployed	controlplane-1.7.2   	1.7.2
+cp  	istio-system	1       	2024-01-11 21:28:13.216254 -0400 -0400	deployed	controlplane-1.8.0   	1.8.0
 
 ❯ kubectl get pod -n istio-system
 NAME                                                     READY   STATUS    RESTARTS     AGE
@@ -172,13 +175,13 @@ spec:
   configEvents:
     events:
     - etag: '"qbSWRU3JzZQ="'
-      timestamp: "2023-10-26T01:27:35.724676312Z"
+      timestamp: "2024-01-11T01:27:35.724676312Z"
       type: XCP_ACCEPTED
     - etag: '"qbSWRU3JzZQ="'
-      timestamp: "2023-10-26T01:27:35.679592291Z"
+      timestamp: "2024-01-11T01:27:35.679592291Z"
       type: MPC_ACCEPTED
     - etag: '"qbSWRU3JzZQ="'
-      timestamp: "2023-10-26T01:27:34.287485286Z"
+      timestamp: "2024-01-11T01:27:34.287485286Z"
       type: TSB_ACCEPTED
   message: Cluster onboarded
   status: READY
