@@ -60,9 +60,11 @@ spec:
       - name: global
         revisions:
         - name: default
-      - name: prod
-        revisions:
-        - name: prod-stable
+          istio:
+            tsbVersion: $VERSION
+        - name: canary
+          istio:
+            tsbVersion: $VERSION
       kubeSpec:
         deployment:
           env:

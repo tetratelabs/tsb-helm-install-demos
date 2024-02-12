@@ -1,0 +1,67 @@
+{
+    "apiVersion": "v1",
+    "kind": "Namespace",
+    "metadata": {
+        "annotations": {
+            "tsb.tetrate.io/contentHash": "68a087286e03792d"
+        },
+        "creationTimestamp": "2023-10-26T14:00:39Z",
+        "deletionTimestamp": "2023-10-26T14:38:29Z",
+        "labels": {
+            "istio-operator-managed": "Reconcile",
+            "kubernetes.io/metadata.name": "istio-system",
+            "name": "istio-system",
+            "platform.tsb.tetrate.io/component": "base",
+            "platform.tsb.tetrate.io/plane": "control",
+            "xcp-edge-validation": "enabled"
+        },
+        "name": "istio-system",
+        "resourceVersion": "84117",
+        "uid": "6a59646f-f80d-4a73-8c76-9b46a485f53e"
+    },
+    "spec": {
+        "finalizers": [
+            "kubernetes"
+        ]
+    },
+    "status": {
+        "conditions": [
+            {
+                "lastTransitionTime": "2023-10-26T14:38:35Z",
+                "message": "Discovery failed for some groups, 1 failing: unable to retrieve the complete list of server APIs: external.metrics.k8s.io/v1beta1: stale GroupVersion discovery: external.metrics.k8s.io/v1beta1",
+                "reason": "DiscoveryFailed",
+                "status": "True",
+                "type": "NamespaceDeletionDiscoveryFailure"
+            },
+            {
+                "lastTransitionTime": "2023-10-26T14:38:39Z",
+                "message": "All legacy kube types successfully parsed",
+                "reason": "ParsedGroupVersions",
+                "status": "False",
+                "type": "NamespaceDeletionGroupVersionParsingFailure"
+            },
+            {
+                "lastTransitionTime": "2023-10-26T14:38:39Z",
+                "message": "All content successfully deleted, may be waiting on finalization",
+                "reason": "ContentDeleted",
+                "status": "False",
+                "type": "NamespaceDeletionContentFailure"
+            },
+            {
+                "lastTransitionTime": "2023-10-26T14:38:39Z",
+                "message": "All content successfully removed",
+                "reason": "ContentRemoved",
+                "status": "False",
+                "type": "NamespaceContentRemaining"
+            },
+            {
+                "lastTransitionTime": "2023-10-26T14:38:39Z",
+                "message": "All content-preserving finalizers finished",
+                "reason": "ContentHasNoFinalizers",
+                "status": "False",
+                "type": "NamespaceFinalizersRemaining"
+            }
+        ],
+        "phase": "Terminating"
+    }
+}
