@@ -18,9 +18,9 @@ Please refer to [Certificates Setup](https://docs.tetrate.io/service-bridge/setu
 
 ```sh
 export FOLDER="."
-export TSB_FQDN="r18xhelm.sandbox.tetrate.io"
+export TSB_FQDN="r19xhelm.sandbox.tetrate.io"
 export ORG="tetrate"
-export VERSION="1.8.0"
+export VERSION="1.9.0-internal-rc6"
 ./certs-gen/certs-gen.sh
 ```
 
@@ -36,7 +36,7 @@ The output will consist of:
 export FOLDER="."
 export REGISTRY="gcr.io/r18xhelm-hqdp-1"
 export ORG="tetrate"
-export VERSION="1.8.0"
+export VERSION="1.9.0-internal-rc6"
 export ADMIN_PASSWORD="Tetrate123"
 ./prep_managementplane_values.sh
 cat managementplane_values.yaml
@@ -57,25 +57,28 @@ helm install mp tetrate-tsb-helm/managementplane -n tsb \
 ```sh
 ❯ helm ls -A
 NAME    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
-mp      tsb             1               2024-01-11 21:18:10.768315 -0400 EDT    deployed        managementplane-1.8.0   1.8.0    
+mp      tsb             1               2024-04-05 16:08:58.131719 -0400 EDT    deployed        managementplane-1.9.0-internal-rc5      1.9.0-internal-rc6 
 
 > kubectl get pod -n tsb
-NAME                                           READY   STATUS      RESTARTS   AGE
-central-586695f45f-v68g8                       1/1     Running     0          22s
-elasticsearch-0                                1/1     Running     0          3m30s
-envoy-5d8d8d9656-gcn68                         1/1     Running     0          79s
-envoy-5d8d8d9656-lwm5x                         1/1     Running     0          79s
-iam-8d69d4c4c-gdcgt                            1/1     Running     0          79s
-ldap-64bd7d7c8d-jd25q                          1/1     Running     0          3m31s
-mpc-c4f64dcfb-tmdbn                            1/1     Running     0          79s
-oap-7b7d89f86b-7x6z6                           1/1     Running     0          79s
-otel-collector-5f85668c85-qg7xk                1/1     Running     0          79s
-postgres-54589fcf97-rschw                      1/1     Running     0          3m31s
-teamsync-first-run-4h6mc                       0/1     Completed   0          79s
-tsb-75545fc964-6vdfj                           1/1     Running     0          79s
-tsb-operator-management-plane-cb94ddcb-24p48   1/1     Running     0          4m19s
-web-5899b6cbcb-9658h                           1/1     Running     0          79s
-xcp-operator-central-76b8cb66ff-mgft8          1/1     Running     0          79s
+NAME                                             READY   STATUS    RESTARTS   AGE
+central-6457448659-4dswj                         1/1     Running   0          99s
+elastic-operator-0                               1/1     Running   0          4m22s
+envoy-d8495d777-75lbw                            1/1     Running   0          3m45s
+envoy-d8495d777-h7pdb                            1/1     Running   0          3m45s
+iam-758f9f57c7-ptbk6                             1/1     Running   0          3m45s
+kubegres-controller-manager-6b8fd84f4d-mcjr5     2/2     Running   0          4m22s
+mpc-5cb59fc86b-xbgw4                             1/1     Running   0          3m44s
+oap-668dc45bff-x9kvt                             1/1     Running   0          3m44s
+otel-collector-6475b44bcd-sbzqd                  1/1     Running   0          3m45s
+tsb-76c7866dc8-pfplr                             1/1     Running   0          3m44s
+tsb-elastic-es-es-data-node-0                    1/1     Running   0          3m49s
+tsb-elastic-es-es-master-node-0                  1/1     Running   0          3m49s
+tsb-operator-management-plane-6c844b8dd8-4ks98   1/1     Running   0          4m46s
+tsb-postgres-1-0                                 1/1     Running   0          3m48s
+tsb-postgres-2-0                                 1/1     Running   0          3m19s
+tsb-postgres-3-0                                 1/1     Running   0          2m19s
+web-58877cf75c-lkxrp                             1/1     Running   0          3m45s
+xcp-operator-central-8757f6978-rxjs4             1/1     Running   0          3m45s
 ❯ kubectl -n tsb  get service envoy -o=jsonpath="{.status.loadBalancer.ingress[0]['hostname','ip']}"
 34.82.201.78
 ```
@@ -83,17 +86,12 @@ xcp-operator-central-76b8cb66ff-mgft8          1/1     Running     0          79
 
 > https://docs.tetrate.io/service-bridge/reference/cli/guide/index
 
-After downloading the version for your OS, please run the command 'tctl version' to verify you have 1.8.0.
+After downloading the version for your OS, please run the command 'tctl version' to verify your version
 
 ```sh
-export TSB_FQDN="r18xhelm.sandbox.tetrate.io"
+export TSB_FQDN="r19xhelm.sandbox.tetrate.io"
 export ADMIN_PASSWORD="Tetrate123"
 
-
-# Consult docs on how to install https://docs.tetrate.io/service-bridge/reference/cli/guide/index#installation
-# export VERSION="1.8.0"
-# export DISTRO="linux-amd64"
-# curl -Lo "/usr/local/bin/tctl" "https://binaries.dl.tetrate.io/public/raw/versions/$DISTRO-$VERSION/tctl"
 ```
 Make sure you have updated your DNS with a record for TSB FQDN (`A` record or `CNAME` record of envoy service obtained previously)
 
@@ -108,8 +106,8 @@ tctl config profiles set-current helm
 
 ```sh
 ❯ tctl version
-TCTL version: v1.8.0
-TSB version: v1.8.0
+TCTL version: v1.9.0-internal-rc6
+TSB version: v1.9.0-internal-rc6
 ❯ tctl get org
 NAME       DISPLAY NAME    DESCRIPTION
 tetrate    tetrate
@@ -123,11 +121,11 @@ Please refer to [Requirements and Download Page](https://docs.tetrate.io/service
 
 ```sh
 export FOLDER="."
-export TSB_FQDN="r18xhelm.sandbox.tetrate.io"
+export TSB_FQDN="r19xhelm.sandbox.tetrate.io"
 export REGISTRY="gcr.io/swlab18-cwli-1"
 export ORG="tetrate"
 export CLUSTER_NAME="app-cluster1"
-export VERSION="1.8.0"
+export VERSION="1.9.0-internal-rc6"
 ./prep_controlplane_values.sh
 cat "${CLUSTER_NAME}-controlplane_values.yaml"
 ```
@@ -139,31 +137,33 @@ helm repo add tetrate-tsb-helm 'https://charts.dl.tetrate.io/public/helm/charts/
 helm repo update
 helm install cp tetrate-tsb-helm/controlplane -n istio-system \
   --create-namespace -f "${CLUSTER_NAME}-controlplane_values.yaml" \
-  --version $VERSION --devel
+  --version $VERSION \
+  --devel \
+  --set image.registry=${REGISTRY} \
+  --set spec.hub=${REGISTRY}
+  --set spec.managementPlane.selfSigned=true \
+  --set spec.telemetryStore.elastic.selfSigned=true
 ```
 
 ### Validate installation
 
 ```sh
 ❯ helm ls -A
-NAME	NAMESPACE   	REVISION	UPDATED                               	STATUS  	CHART                	APP VERSION
-cp  	istio-system	1       	2024-01-11 21:28:13.216254 -0400 -0400	deployed	controlplane-1.8.0   	1.8.0
+NAME    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                           APP VERSION       
+cp      istio-system    1               2024-04-11 14:21:54.634675 -0400 EDT    deployed        controlplane-1.9.0-internal-rc6 1.9.0-internal-rc6
 
 ❯ kubectl get pod -n istio-system
-NAME                                                     READY   STATUS    RESTARTS     AGE
-edge-7c9846f7cd-jvgn6                                    1/1     Running   0            2m7s
-istio-operator-6bdbbc6c8c-g7gx8                          1/1     Running   0            2m8s
-istio-operator-prod-stable-6b45d44bd8-gd569              1/1     Running   0            2m8s
-istio-system-custom-metrics-apiserver-845fd8ccd4-mbpdn   1/1     Running   0            2m22s
-istiod-6999bf6c64-k949j                                  1/1     Running   0            109s
-istiod-prod-stable-6f6cdd8574-d9np2                      1/1     Running   0            110s
-oap-deployment-6bd4bd8797-r72n9                          3/3     Running   0            90s
-onboarding-operator-77899d59f4-dhgph                     1/1     Running   1 (2m ago)   2m22s
-otel-collector-76b7bdcb55-gsm9s                          2/2     Running   0            2m22s
-tsb-operator-control-plane-6898d66f74-nd7wh              1/1     Running   0            2m56s
-vmgateway-7d45b7fc99-bgpqn                               1/1     Running   0            101s
-wasmfetcher-55487bf44d-b2flb                             1/1     Running   0            2m22s
-xcp-operator-edge-694dc77c55-dn87j                       1/1     Running   0            2m22s
+NAME                                                     READY   STATUS    RESTARTS   AGE
+edge-6dcf648ddc-ngkqv                                    1/1     Running   0          53m
+istio-operator-6c7589658b-ctwsp                          1/1     Running   0          64m
+istio-system-custom-metrics-apiserver-7479b7d8c6-b9svg   1/1     Running   0          64m
+istiod-6c599bd8d8-75cgx                                  1/1     Running   0          64m
+oap-deployment-59597d4d6f-j2rks                          3/3     Running   0          7m27s
+onboarding-operator-59cffcc54c-zl6cq                     1/1     Running   0          64m
+otel-collector-5cf47879db-75jvd                          2/2     Running   0          64m
+tsb-operator-control-plane-749854cdc9-h4dgb              1/1     Running   0          57m
+wasmfetcher-b6c5f4988-hwfvs                              1/1     Running   0          64m
+xcp-operator-edge-c46b977db-5kvc4                        1/1     Running   0          54m
 
 ❯  tctl x  status cluster app-cluster1 -o yaml
 apiVersion: api.tsb.tetrate.io/v2
@@ -174,14 +174,14 @@ metadata:
 spec:
   configEvents:
     events:
-    - etag: '"qbSWRU3JzZQ="'
-      timestamp: "2024-01-11T01:27:35.724676312Z"
+    - etag: '"qSzR7gvoORQ="'
+      timestamp: "2024-04-11T13:44:37.860801302Z"
       type: XCP_ACCEPTED
-    - etag: '"qbSWRU3JzZQ="'
-      timestamp: "2024-01-11T01:27:35.679592291Z"
+    - etag: '"qSzR7gvoORQ="'
+      timestamp: "2024-04-11T13:44:37.830274023Z"
       type: MPC_ACCEPTED
-    - etag: '"qbSWRU3JzZQ="'
-      timestamp: "2024-01-11T01:27:34.287485286Z"
+    - etag: '"qSzR7gvoORQ="'
+      timestamp: "2024-04-11T13:44:33.341066660Z"
       type: TSB_ACCEPTED
   message: Cluster onboarded
   status: READY
