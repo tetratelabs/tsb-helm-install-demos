@@ -7,12 +7,6 @@ image:
   registry: $REGISTRY
   tag: $VERSION
 secrets:
-  ldap:
-    binddn: cn=admin,dc=tetrate,dc=io
-    bindpassword: admin
-  postgres:
-    password: tsb-postgres-password
-    username: tsb
   tsb:
     adminPassword: $ADMIN_PASSWORD
     cert: |   
