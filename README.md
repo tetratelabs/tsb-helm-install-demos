@@ -1,6 +1,6 @@
 # TSB Demo Helm Installation
 
-## Tetrate Service Bridge (TSB) 1.8.X
+## Tetrate Service Bridge (TSB)
 Review the TSB components in the docs [here](https://docs.tetrate.io/service-bridge/setup/components). This page will explain in details TSB components and external dependencies that you have to provision and connect to be able to run TSB.
 
 ## Firewall Rules Requirements
@@ -20,7 +20,7 @@ Please refer to [Certificates Setup](https://docs.tetrate.io/service-bridge/setu
 export FOLDER="."
 export TSB_FQDN="r19xhelm.sandbox.tetrate.io"
 export ORG="tetrate"
-export VERSION="1.9.0-internal-rc6"
+export VERSION="1.9.0"
 ./certs-gen/certs-gen.sh
 ```
 
@@ -36,7 +36,7 @@ The output will consist of:
 export FOLDER="."
 export REGISTRY="gcr.io/r18xhelm-hqdp-1"
 export ORG="tetrate"
-export VERSION="1.9.0-internal-rc6"
+export VERSION="1.9.0"
 export ADMIN_PASSWORD="Tetrate123"
 ./prep_managementplane_values.sh
 cat managementplane_values.yaml
@@ -57,7 +57,7 @@ helm install mp tetrate-tsb-helm/managementplane -n tsb \
 ```sh
 ❯ helm ls -A
 NAME    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
-mp      tsb             1               2024-04-05 16:08:58.131719 -0400 EDT    deployed        managementplane-1.9.0-internal-rc5      1.9.0-internal-rc6 
+mp      tsb             1               2024-04-05 16:08:58.131719 -0400 EDT    deployed        managementplane-1.9.0-internal-rc5      1.9.0 
 
 > kubectl get pod -n tsb
 NAME                                             READY   STATUS    RESTARTS   AGE
@@ -106,8 +106,8 @@ tctl config profiles set-current helm
 
 ```sh
 ❯ tctl version
-TCTL version: v1.9.0-internal-rc6
-TSB version: v1.9.0-internal-rc6
+TCTL version: v1.9.0
+TSB version: v1.9.0
 ❯ tctl get org
 NAME       DISPLAY NAME    DESCRIPTION
 tetrate    tetrate
@@ -125,7 +125,7 @@ export TSB_FQDN="r19xhelm.sandbox.tetrate.io"
 export REGISTRY="gcr.io/swlab18-cwli-1"
 export ORG="tetrate"
 export CLUSTER_NAME="app-cluster1"
-export VERSION="1.9.0-internal-rc6"
+export VERSION="1.9.0"
 ./prep_controlplane_values.sh
 cat "${CLUSTER_NAME}-controlplane_values.yaml"
 ```
@@ -150,7 +150,7 @@ helm install cp tetrate-tsb-helm/controlplane -n istio-system \
 ```sh
 ❯ helm ls -A
 NAME    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                           APP VERSION       
-cp      istio-system    1               2024-04-11 14:21:54.634675 -0400 EDT    deployed        controlplane-1.9.0-internal-rc6 1.9.0-internal-rc6
+cp      istio-system    1               2024-04-11 14:21:54.634675 -0400 EDT    deployed        controlplane-1.9.0 1.9.0
 
 ❯ kubectl get pod -n istio-system
 NAME                                                     READY   STATUS    RESTARTS   AGE
