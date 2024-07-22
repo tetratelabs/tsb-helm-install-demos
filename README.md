@@ -140,7 +140,7 @@ helm install cp tetrate-tsb-helm/controlplane -n istio-system \
   --version $VERSION \
   --devel \
   --set image.registry=${REGISTRY} \
-  --set spec.hub=${REGISTRY}
+  --set spec.hub=${REGISTRY} \
   --set spec.managementPlane.selfSigned=true \
   --set spec.telemetryStore.elastic.selfSigned=true
 ```
